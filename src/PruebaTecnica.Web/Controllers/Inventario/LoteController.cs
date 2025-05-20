@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PruebaTecnica.Core;
 using PruebaTecnica.Dto;
 using PruebaTecnica.Entities;
@@ -12,6 +13,7 @@ namespace PruebaTecnica.Web.Controllers.Inventario
     [Route("api/[controller]")]
     [ApiController]
     [IgnoreAntiforgeryToken]
+    [Authorize]
     public class LoteController : PruebaTecnicaControllerBase
     {
         private readonly ILoteAppService _loteAppService;

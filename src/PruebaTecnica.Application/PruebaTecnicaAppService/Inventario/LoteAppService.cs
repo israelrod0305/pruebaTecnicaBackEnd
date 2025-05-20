@@ -1,4 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Castle.Core.Logging;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
+using PruebaTecnica.Core;
 using PruebaTecnica.Dto;
 using PruebaTecnica.Entities;
 using PruebaTecnica.IPruebaTecnicaAppService.InventarioAppService;
@@ -13,6 +16,13 @@ namespace PruebaTecnica.PruebaTecnicaAppService.Inventario
 {
     public class LoteAppService : PruebaTecnicaAppServiceBase, ILoteAppService
     {
+
+        private readonly ILogger<Lote> _logger;
+        public LoteAppService(ILogger<Lote> logger)
+        {
+            _logger = logger;
+        }
+
         private SqlCommand CrearComando(SqlConnection conn, LoteDto lote, string accion)
         {
             SqlCommand cmd = new SqlCommand("sp_Lote", conn);
@@ -45,6 +55,7 @@ namespace PruebaTecnica.PruebaTecnicaAppService.Inventario
                     {
                         if (await reader.ReadAsync())
                         {
+                            _logger.LogInformation("Lote Creado Correctamente");
                             var resultado = reader["Resultado"].ToString();
                             var mensaje = reader["Mensaje"].ToString();
 
